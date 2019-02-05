@@ -36,7 +36,7 @@ import roslib
 
 from python_qt_binding import loadUi
 from python_qt_binding.QtCore import Qt, QTimer, qWarning, Slot
-from python_qt_binding.QtGui import QIcon
+from python_qt_binding.QtGui import QIcon, QPixmap
 from python_qt_binding.QtWidgets import QAction, QMenu, QWidget
 
 import rospy
@@ -124,11 +124,20 @@ class PlotWidget(QWidget):
 
         rp = rospkg.RosPack()
         ui_file = os.path.join(rp.get_path('rqt_plot'), 'resource', 'plot.ui')
+        icon_dir = os.path.join(rp.get_path('rqt_gui'), 'resource','icons')
         loadUi(ui_file, self)
-        self.subscribe_topic_button.setIcon(QIcon.fromTheme('list-add'))
-        self.remove_topic_button.setIcon(QIcon.fromTheme('list-remove'))
-        self.pause_button.setIcon(QIcon.fromTheme('media-playback-pause'))
-        self.clear_button.setIcon(QIcon.fromTheme('edit-clear'))
+        self.subscribe_topic_button.setIcon(QIcon.fromTheme('list-add',
+            QIcon(QPixmap(os.path.join(icon_dir, 'list-add.png')))
+        ))
+        self.remove_topic_button.setIcon(QIcon.fromTheme('list-remove',
+            QIcon(QPixmap(os.path.join(icon_dir, 'list-remove.png')))
+        ))
+        self.pause_button.setIcon(QIcon.fromTheme('media-playback-pause',
+            QIcon(QPixmap(os.path.join(icon_dir, 'media-playback-pause.png')))
+        ))
+        self.clear_button.setIcon(QIcon.fromTheme('edit-clear',
+            QIcon(QPixmap(os.path.join(icon_dir, 'edit-clear.png')))
+        ))
         self.data_plot = None
 
         self.subscribe_topic_button.setEnabled(False)
